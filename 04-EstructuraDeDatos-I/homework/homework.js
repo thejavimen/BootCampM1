@@ -15,9 +15,22 @@ Como ejercicio adicional y completamente opcional, al terminar de resolver este 
 */
 
 function nFactorial(n) {
+  if(n===1 || n===0){
+    return 1;
+  }else if(n<0){
+    return "No existe el factorial :(";
+  }
+  return n*nFactorial(n-1);
 }
 
 function nFibonacci(n) {
+  if(n>1){
+    return nFibonacci(n-1)+nFibonacci(n-2);
+  }else if(n<=0) {
+      return 0;
+  }else if(n==1){
+      return 1
+  }
 }
 
 /*
@@ -29,9 +42,58 @@ Implementar la clase Queue, sabiendo que es una estructura de tipo FIFO, donde e
 Pueden utilizar class o función constructora.
 */
 
-function Queue() {
-
+function Queue(){
+  this.lilo=[];
+  
+  this.enqueue=function(valor){
+    this.lilo.push(valor);
+  }
+  
+  this.dequeue=function(){
+    if(this.lilo.length==0){
+      return undefined;
+    }else{
+      return this.lilo.shift();
+    }
+  }
+  
+  this.size=function(){
+    return this.lilo.length;
+  }
+  this.mostrar=function(){
+    return this.lilo
+  }
 }
+
+/*
+function Queue(){
+  this.lilo=[];
+}
+Queue.prototype.enqueue=function(valor){
+  this.lilo.push(valor);
+};
+Queue.prototype.dequeue=function(){
+  if(this.lilo.length==0){
+    return undefined;
+  }else{
+    return this.lilo.shift();
+  }
+};
+Queue.prototype.size=function(){
+  return this.lilo.length;
+};
+Queue.prototype.view=function(){
+  return this.lilo;
+}
+
+let arreglo = new Queue;
+
+arreglo.enqueue(10)
+console.log(arreglo.size());
+arreglo.dequeue();
+console.log(arreglo.dequeue())
+console.log(arreglo.view());
+*/
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
