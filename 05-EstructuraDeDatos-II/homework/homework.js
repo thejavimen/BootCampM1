@@ -102,7 +102,66 @@ La clase debe tener los siguientes métodos:
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
 
-function HashTable() {}
+function HashTable() {
+  this.table= new Array(35);
+  this.length=0;
+  this.numBuckets=35;
+  
+  this.hash=function(key){
+  let n=0;
+  for(let i=0;i<key.length;i++){
+    n=n+key.charCodeAt(i);
+  }
+  return n%35;
+  }
+}
+
+HashTable.prototype.set=function(key,value){
+  if(typeof key !== "string"){
+    throw TypeError("Keys must be strings");
+  }
+  let index=this.hash(key);
+  let x=true;
+  if(this.table[index]){
+    for(let i=0;i<this.table[index].length;i=i+2){
+      if(this.table[index][i]==key){
+        this.table[index][i+1]=value
+        x=false;
+        break;
+      }
+    }
+    if(x==true){// se ejecuta el codigo si no hay coinsidencia con alguna key
+      this.table[index]=this.table[index].concat([key,value]);
+    }
+  }else{
+    this.table[index]=[key,value]
+  }
+}
+HashTable.prototype.get=function(key){
+  let index=this.hash(key);
+  if(this.table[index]){
+    for(let i=0;i<this.table[index].length;i=i+2){
+      if(this.table[index][i]==key){
+        return this.table[index][i+1];
+      }
+    }
+  }
+  
+}
+HashTable.prototype.hasKey=function(key){
+  let index=this.hash(key);
+  if(this.table[index]){
+    for(let i=0;i<this.table[index].length;i=i+2){
+      if(this.table[index][i]==key){
+        return true;
+      }else{
+        return false
+      }
+    }
+  }else{
+    return false;
+  }
+}
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
