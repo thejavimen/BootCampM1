@@ -11,10 +11,82 @@ Implementar la clase LinkedList, definiendo los siguientes métodos:
   En caso de que la búsqueda no arroje resultados, search debe retornar null.
 */
 
-function LinkedList() {}
+function LinkedList() {
+  this.length=0;
+  this.head=null;
+}
 
-function Node(value) {}
+function Node(value) {
+  this.value=value;
+  this.next=null;
+}
 
+LinkedList.prototype.add=function(value){
+  let nodo=new Node(value);
+  let current=this.head;
+  if(!current){
+    this.head=nodo
+    this.length++;
+    return nodo;
+  }
+  while(current.next){
+    current=current.next;
+  }
+  current.next=nodo;
+  this.length++
+  return nodo;
+}
+
+LinkedList.prototype.remove=function(){
+  let current=this.head;
+  let count=1;
+  let varl="";
+  if(this.length==0){
+    return null;
+  }else if(this.length==1){//elimina el unico objeto que queda en la lista
+    varl=current.value;
+    this.head=null;
+    this.length--;
+    return varl;
+  }
+  while(count<this.length-1){
+    count++
+    current=current.next;
+  }
+  this.length--;
+  varl=current.next.value;
+  current.next=null;
+  return varl
+}
+LinkedList.prototype.search=function(value){
+  let current=this.head;
+  if(this.length==0){//Si la lita esta vacia
+    return null;
+  }
+  if(value instanceof Function){//si es una funcion 
+    while(current.next){
+    if(value(current.value)){//Evalua el valor de la lista con la funcion
+      return current.value;
+    }
+    current=current.next;
+    }
+    if(value(current.value)){
+      return current.value;
+    }
+  }else{                          //si es una variable normal.
+    while(current.next){
+    if(current.value==value){
+      return value;
+    }
+    current=current.next;
+    }
+    if(current.value==value){
+      return value;
+    }
+  }
+  
+  return null;
+}
 /*
 Implementar la clase HashTable.
 
